@@ -9,12 +9,6 @@ We'll use Node's [fs], [process], and [http], as well as the third-party [nodemo
 [nodemon]: https://nodemon.io/
 [process]: https://nodejs.org/api/process.html#process_process
 
-### :bug: :no_entry_sign: Debugging
-
-Chrome's inspector is available to us when debugging Node applications. [Read about it here][debugging]!
-
-[debugging]: https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27
-
 ## Reading and Writing from Files
 
 We'll start with the [fs] module. There is a provided animals.txt file we'll use to conduct our experiments. 
@@ -57,9 +51,9 @@ const fs = require('fs');
 fs.readFile('./animals.txt', 'utf-8', (err, data) => {
   if (err) {
     console.log(err);
-    return;
+  } else {
+    console.log(data);
   }
-  console.log(data);
 })
 ```
 
@@ -67,7 +61,7 @@ Now we can run the file and see a nice list of all our animals. As an experiment
 
 Let's move on to [fs.writeFile]. There are a few differences: we provide the data that should be written to the file as the second argument, and our callback function will now only be provided the error object (if it exists).
 
-Replace the `fs.readFile` code from earlier with:
+Comment out your previous `fs.readFile` code and add this to `animal_fun.js`:
 
 ```javascript
 const fs = require('fs');
@@ -75,7 +69,6 @@ const fs = require('fs');
 fs.writeFile('./example.txt', 'I will be written to example.txt', err => {
   if (err) {
     console.log(err);
-    return;
   } else {
     console.log("file successfully written!");
   }
@@ -102,7 +95,9 @@ Try adding some additional words after `node animal_fun.js` and see how it comes
 
 ### Putting it all together so far...
 
-Let's put everything we've learned so far to use:
+Let's put everything we've learned so far to use. 
+
+Here's your task:
 
 * Pass a single letter to your script
 * Read the animals.txt file
@@ -117,6 +112,8 @@ We'll now turn our attention to the [http] module, using the [createServer] meth
 create an instance of [http.Server]. 
 
 ### Nodemon 
+
+If you haven't done so already, create a `package.json` by running `npm init --yes`. 
 
 Before we dive into server-world. We're going to `npm install --save-dev nodemon`.
 
@@ -139,8 +136,8 @@ Finally, we need to provide a port to our server. Use http.Server's [listen] met
 const http = require('http')
 
 const server = http.createServer((req, res) => {
-    res.write('hello world')
-    res.end()
+    res.write('hello world');
+    res.end();
 })
 
 server.listen(8000, () => console.log("I'm listening on port 8000!"))
@@ -184,12 +181,13 @@ We'll need the [fs], [querystring], [https], and [http] modules as well, require
 ```javascript
 const githubServer = http.createServer((req, res) => {
   if (req.method === 'POST') {
-    res.end("I'm a POST request!")
+    res.end("I'm a POST request!");
+  } else {
+    res.end("Danger, not a POST request!");
   }
-  res.end("Danger, not a POST request!")
 })
 
-githubServer.listen(8080, () => console.log('Listening on 8080'))
+githubServer.listen(8080, () => console.log('Listening on 8080'));
 ```
 
 Let's take a quick detour and learn more about the [request] object fed into our callback as the first argument. This object is an implementation of the [writable] stream and inherits from the event [emitter] class. 
