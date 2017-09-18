@@ -17,21 +17,26 @@ Chrome's inspector is available to us when debugging Node applications. [Read ab
 
 ## Reading and Writing from Files
 
-We'll start with the [fs] module. There is a provided animals.txt file we'll use to conduct our experiments. Make an empty file for our Node code:
+We'll start with the [fs] module. There is a provided animals.txt file we'll use to conduct our experiments. 
 
-`touch animal_fun.js`
+1. Make a directory called `github-grabber`: `mkdir github-grabber`.
+2. `cd` into that directory and then make an empty file for our Node code: `touch animal_fun.js`
+3. Make an empty animals text file: `touch animals.txt`
+4. Open the master [animals.txt](./animals.txt) and copy and paste all the text into your own animals text file.
 
 The `fs` module is provided with Node, but we'll need to `require` the module in our file. To start, we'll read the animal file and console.log every entry.
 
+In your own `animal_fun.js`:
+
 ```javascript
-const fs = require('fs')
+const fs = require('fs');
 
 fs.readFile('./animals.txt', (err, data) => {
   if (err) {
-    console.log(err)
-    return
+    console.log(err);
+    return;
   }
-  console.log(data)
+  console.log(data);
 })
 ```
 
@@ -47,14 +52,14 @@ Neat, but since we know this will be a text file and we'd like to make it human-
 [error]: https://nodejs.org/api/errors.html#errors_errors
 
 ```javascript
-const fs = require('fs')
+const fs = require('fs');
 
 fs.readFile('./animals.txt', 'utf-8', (err, data) => {
   if (err) {
-    console.log(err)
-    return
+    console.log(err);
+    return;
   }
-  console.log(data)
+  console.log(data);
 })
 ```
 
@@ -62,15 +67,18 @@ Now we can run the file and see a nice list of all our animals. As an experiment
 
 Let's move on to [fs.writeFile]. There are a few differences: we provide the data that should be written to the file as the second argument, and our callback function will now only be provided the error object (if it exists).
 
+Replace the `fs.readFile` code from earlier with:
+
 ```javascript
-const fs = require('fs')
+const fs = require('fs');
 
 fs.writeFile('./example.txt', 'I will be written to example.txt', err => {
   if (err) {
-    console.log(err)
-    return
+    console.log(err);
+    return;
+  } else {
+    console.log("file successfully written!");
   }
-  console.log("file successfully written!")
 })
 ```
 
