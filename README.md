@@ -160,6 +160,7 @@ or
 To recap:
 
 * Check if the client passed a letter to your Node server as a query string
+  * NB: Your url that passes in the query string should look something like `localhost:8000/?letter=a`.
 * Read the animals.txt file into memory
 * If a letter was passed, select all animals that start with the provided letter
 * Write the result in your response (Don't worry about valid HTML for now)
